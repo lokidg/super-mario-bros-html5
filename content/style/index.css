@@ -1,0 +1,12 @@
+html
+{
+    background-color: #000000;
+}
+
+#playground
+{
+    border: 1px;
+    position: fixed;
+    left: 23%;
+    top: 20%;
+}
