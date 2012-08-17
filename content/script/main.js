@@ -1,33 +1,92 @@
-const PATH_TO_LEVEL_MAP = "content/image/level.png";
-
-var level = new Image();
-
 var playground;
 var context;
-
-var x = 0;
-var y = 0;
 
 window.onload = function() {
 
     playground = document.getElementById("playground");
     context = playground.getContext("2d");
 
-    $('#playground').mousemove(move);
+    var Block = new Class({
 
-    level.onload = function() {
-        context.drawImage(level, 0, 0);
+        initialize: function() {
+                    },
+
+        tile: function() {
+
+                  return null;
+              },
+
+        width: 16,
+
+        height: 16
+    });
+
+    var Ground = new Class({
+
+        Extends: Block,
+
+        tile: function() {
+            var image = new Image();
+            image.src = "content/image/platform-top.png";
+            return image;
+        },
+    });
+
+    var EmptyBlock = new Class({
+        
+        Extends: Block,
+
+        tile: function() {
+            var image = new Image();
+            image.src = "content/image/platform-air.png";
+            return image;
+        },
+    });
+
+    var Sky = new Class({
+        
+        Extends: Block,
+
+        tile: function() {
+            var image = new Image();
+            image.src = "content/image/tile-sky.png";
+            return image;
+        },
+    });
+
+    var MapParser = new Class({
+        
+        initialize: function() {
+                    },
+
+        getTile : function(number) {
+                      switch (number) {
+                          case 0:
+                              return new Sky();
+                              break;
+                          case 1:
+                              return new Ground();
+                              break;
+                      }
+                  }
+    });
+
+    var mapParser = new MapParser();
+
+    for (var i = 0; i < map.length; i++) {
+
+        for (var j = 0; j < map[i].length; j++) {
+
+            var image = mapParser.getTile(map[i][j]);
+            context.drawImage(image.tile(), j * 16, i * 16);
+        }
     }
-
-    level.src = PATH_TO_LEVEL_MAP;
 }
 
-function redrawPlayground(x, y) {
+function move(length) {
 
-}
-
-function move() {
-
-    x -= 1;
-    context.drawImage(level, x, y);
+    if (x > -3392 * 2 + 740) {
+        x -= length;
+        context.drawImage(level, x, y, playgroundWidth, playgroundHeight);
+    }
 }
